@@ -1,0 +1,36 @@
+{
+  "dataset": "AffectFusion Multilingual Text-Emoji Emotion Corpus (v1.0.0)",
+  "num_classes": 9,
+  "label2id": {
+    "Joy": 0,
+    "Neutral": 1,
+    "Anger": 2,
+    "Sadness": 3,
+    "Surprise": 4,
+    "Sarcasm": 5,
+    "Fear": 6,
+    "Disgust": 7,
+    "Anticipation": 8
+  },
+  "id2label": {
+    "0": "Joy",
+    "1": "Neutral",
+    "2": "Anger",
+    "3": "Sadness",
+    "4": "Surprise",
+    "5": "Sarcasm",
+    "6": "Fear",
+    "7": "Disgust",
+    "8": "Anticipation"
+  },
+  "lang2id": {
+    "ENG": 0,
+    "BN": 1,
+    "BNG": 2
+  },
+  "id2lang": {
+    "0": "ENG",
+    "1": "BN",
+    "2": "BNG"
+  }
+}

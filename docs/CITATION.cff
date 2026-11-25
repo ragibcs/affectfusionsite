@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use the AffectFusion dataset in your research, please cite it using the metadata below."
+type: dataset
+title: "AffectFusion: A Multilingual Multimodal Text-and-Emoji Emotion Recognition Dataset (English, Bangla, and Banglish)"
+version: "1.0.0"
+date-released: "2026-11-26"
+license: CC-BY-4.0
+repository-code: "https://github.com/ragibcs/AffectFusion"
+abstract: >-
+  AffectFusion v1.0.0 is a zero-leakage, 30,000-row multilingual multimodal social media dataset
+  for text-and-emoji emotion recognition spanning English (ENG), Native Bengali (BN), and Romanized
+  Banglish (BNG) across 9 emotion classes (Joy, Neutral, Anger, Sadness, Surprise, Sarcasm, Fear,
+  Disgust, and Anticipation). It provides separated dual-stream text, emoji, and CLDR demoji
+  representations (25 columns), strictly real scraped validation (3,000) and test (3,000) splits,
+  and 5,000 blinded human-verified gold annotations (83.00% raw agreement, Cohen's kappa = 0.8087).
+keywords:
+  - multimodal emotion recognition
+  - text and emoji semantics
+  - sarcasm detection
+  - multilingual NLP
+  - Bangla NLP
+  - Banglish
+  - cross-attention
+  - affective computing
+  - benchmark dataset
+authors:
+  - family-names: "Hasan"
+    given-names: "MD. Ragib"
+    email: "hasan2305101775@diu.edu.bd"
+    affiliation: "Department of Computer Science and Engineering, Daffodil International University, Dhaka, Bangladesh"
+  - family-names: "Galib"
+    given-names: "MD. Asadulla Hel"
+    email: "galib2305101270@diu.edu.bd"
+    affiliation: "Department of Computer Science and Engineering, Daffodil International University, Dhaka, Bangladesh"
+  - family-names: "Akter"
+    given-names: "Sharmin"
+    affiliation: "Department of Computer Science and Engineering, Daffodil International University, Dhaka, Bangladesh"
+  - family-names: "Raza"
+    given-names: "Dewan Mamun"
+    affiliation: "Department of Computer Science and Engineering, Daffodil International University, Dhaka, Bangladesh"
