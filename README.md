@@ -13,5 +13,5 @@ Open `index.html` directly in any browser, or run:
 python3 -m http.server 8080
 ```
 
-## Enable GitHub Pages
-After pushing to `main`, open **Settings → Pages → Build and deployment**, set **Source** to `Deploy from a branch`, select **`main` / `/ (root)`**, and save.
+## Enable GitHub Pages (GitHub Actions)
+After pushing to `main`, open **Settings → Pages → Build and deployment**, set **Source** to **`GitHub Actions`**, and the workflow (`.github/workflows/deploy-pages.yml`) will automatically deploy every push on `main` to `https://ragibcs.github.io/affectfusion.site/`.
