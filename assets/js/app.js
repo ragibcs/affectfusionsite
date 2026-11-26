@@ -136,22 +136,22 @@
       .replace(/"/g, "&quot;");
   }
 
-  // ---------- Hero Live Specimen Switcher ----------
+  // ---------- Hero Live Specimen Switcher (Verified against Consensus Gold + Model Predictions) ----------
   const HERO_SPECIMENS = {
     eng: {
-      quote: "YAAAAASSSS ABOUT TIME😭😭😭",
-      wrong: "Text-Only / AI: Anticipation / Sadness",
-      right: "Gold Truth: Joy (celebratory tears)"
+      quote: "<USER>-q7w and they were great special effects 🙄",
+      wrong: "Text-Only Model: Joy (fooled by literal praise)",
+      right: "Consensus Gold & Fusion: Sarcasm (unanimous · rolling eyes)"
     },
     bn: {
-      quote: "<USER>দাদা ও মনে হয় paint করে skin এ 🐸😒🫶",
-      wrong: "AI Pseudo-Label: Disgust",
-      right: "Gold Truth: Sarcasm (unamused + frog cue)"
+      quote: "জনগণকে ২৪ ঘন্টা বিদ্যুৎ দিতে পারে না, আবার আসছে বৈদ্যুতিক রেল 😂",
+      wrong: "Text-Only Model: Anger (literal complaint)",
+      right: "Consensus Gold & Fusion: Sarcasm (unanimous · mocking laugh)"
     },
     bng: {
       quote: "Apnake keo jigges Kore nai 🙄",
-      wrong: "Literal Text Only: Neutral / Disgust",
-      right: "Gold Truth: Anger (dismissive eye-roll)"
+      wrong: "Text-Only Model: Sadness (missed Romanized irony)",
+      right: "Consensus Gold & Fusion: Sarcasm (adjudicated · eye-roll)"
     }
   };
   const heroSpecQuote = document.getElementById("heroSpecQuote");
@@ -169,37 +169,37 @@
     });
   });
 
-  // ---------- Interactive Dissection Lab ----------
+  // ---------- Interactive Dissection Lab (Verified against Consensus Gold test_3k predictions) ----------
   const DISSECT_CASES = [
     {
-      lang: "ENG · Sarcasm",
-      raw: "<USER> and this is why we cant have nice things 🤦♂",
-      textOnly: "<USER> and this is why we cant have nice things",
-      demoji: "man facepalming",
-      blindPred: "Predicted: Anger (literal complaint)",
-      blindNote: "Without the facepalm glyph, XLM-R Text-Only reads flat hostility (Sarcasm F1 drops to 0.3024).",
-      fusionPred: "Predicted: Sarcasm ✓ (+16.30 F1 lift)",
-      fusionNote: "Dual-stream CLDR 'man facepalming' pairs with ironic phrasing to isolate Sarcasm."
+      lang: "ENG · Sarcasm (AFG_038543)",
+      raw: "<USER>-q7w and they were great special effects 🙄",
+      textOnly: "<USER>-q7w and they were great special effects",
+      demoji: "face with rolling eyes",
+      blindPred: "Predicted: Joy (fooled by 'great')",
+      blindNote: "Without the eye-roll glyph, XLM-R Text-Only reads literal praise (Sarcasm F1 collapses to 0.3153).",
+      fusionPred: "Predicted: Sarcasm ✓ (+14.73 F1 lift)",
+      fusionNote: "CLDR 'face with rolling eyes' inverts positive wording to recover unanimous Consensus Gold Sarcasm."
     },
     {
-      lang: "BN · Sarcasm",
-      raw: "<USER>দাদা ও মনে হয় paint করে skin এ 🐸😒🫶",
-      textOnly: "<USER>দাদা ও মনে হয় paint করে skin এ",
-      demoji: "frog · unamused face · heart hands",
-      blindPred: "Predicted: Neutral / Disgust",
-      blindNote: "Stripping emojis removes the mocking juxtaposition between unamused face and heart hands.",
-      fusionPred: "Predicted: Sarcasm ✓ (Gold Corrected)",
-      fusionNote: "Incongruity between 😒 (unamused) and 🫶 (heart hands) flags ironic mockery."
+      lang: "BN · Sarcasm (AFG_016172)",
+      raw: "জনগণকে ২৪ ঘন্টা বিদ্যুৎ দিতে পারে না, আবার আসছে বৈদ্যুতিক রেল 😂",
+      textOnly: "জনগণকে ২৪ ঘন্টা বিদ্যুৎ দিতে পারে না, আবার আসছে বৈদ্যুতিক রেল",
+      demoji: "face with tears of joy",
+      blindPred: "Predicted: Anger (literal grievance)",
+      blindNote: "Stripping the mocking laugh glyph causes Text-Only to misread ironic civic satire as raw Anger.",
+      fusionPred: "Predicted: Sarcasm ✓ (Unanimous Gold)",
+      fusionNote: "Pairing the grievance with 😂 ('face with tears of joy') signals sarcastic mockery across Bangla script."
     },
     {
-      lang: "BNG · Anticipation",
-      raw: "Next video kobe asbe 😑😑",
-      textOnly: "Next video kobe asbe",
-      demoji: "expressionless face ×2",
-      blindPred: "Predicted: Neutral (short question)",
-      blindNote: "Short Romanized Banglish phrasing lacks strong lexical emotion cues on its own.",
-      fusionPred: "Predicted: Anticipation ✓ (Impatient waiting)",
-      fusionNote: "Repeated expressionless emojis amplify eager fan impatience (+10.32 BNG F1 lift)."
+      lang: "BNG · Sarcasm (AFG_047815)",
+      raw: "1 year hoye gelo akhono full record ta fash krte parlo na 🤡",
+      textOnly: "1 year hoye gelo akhono full record ta fash krte parlo na",
+      demoji: "clown face",
+      blindPred: "Predicted: Sadness (missed mockery)",
+      blindNote: "Romanized Banglish without emoji cues loses its derisive signal (BNG Text-Only F1 drops to 0.4379).",
+      fusionPred: "Predicted: Sarcasm ✓ (+11.31 BNG F1 lift)",
+      fusionNote: "The clown face glyph anchors sarcastic mockery and lifts Banglish Macro-F1 from 0.4379 to 0.5510."
     }
   ];
   const dissectGrid = document.getElementById("dissectGrid");
@@ -252,7 +252,7 @@
         </tr>`;
       }).join("");
       splitPanel.innerHTML = `
-        <p style="margin:0 0 12px;color:var(--ink-2)">Executed <strong>strictly inside <code>train_24k</code> after locking <code>val_3k</code> and <code>test_3k</code></strong> across ${aug.total_gemini_calls} Gemini Flash batches (${aug.total_augmented.toLocaleString()} emoji-preserving paraphrases). Zero augmented rows appear in Validation or Test.</p>
+        <p style="margin:0 0 12px;color:var(--ink-2)">Executed <strong>strictly inside <code>train_24k</code> after locking <code>val_3k</code> and <code>test_3k</code></strong> across ${aug.total_gemini_calls} Gemini Flash batches (${aug.total_augmented.toLocaleString()} emoji-preserving paraphrases, including 1,116 cross-lingual ENG→BN/BNG Fear transfers). Zero augmented rows appear in Validation or Test.</p>
         <p class="swipe-hint">← Swipe table horizontally →</p>
         <div class="table-wrap">
           <table>
@@ -272,21 +272,21 @@
       const bng = sp.train.language_counts.BNG + sp.val.language_counts.BNG + sp.test.language_counts.BNG;
       const emoRows = sp.train.emoji_rows + sp.val.emoji_rows + sp.test.emoji_rows;
       info = {
-        title: "Full Corpus Ledger (N = 30,000 · 80 / 10 / 10)",
+        title: "Full Consensus Corpus Ledger (N = 30,000 · 80 / 10 / 10)",
         rows: 30000, real: 24872, aug: 3528, ext: 2747,
-        gold: "5,000 (100% Test + 66.7% Val)",
+        gold: "5,000 Double-Verified (κ = 0.7717, α = 0.7717)",
         emoji_pct: ((emoRows / 30000) * 100).toFixed(2),
         lang: { ENG: [eng, (eng / 300).toFixed(1)], BN: [bn, (bn / 300).toFixed(1)], BNG: [bng, (bng / 300).toFixed(1)] },
         counts: totals,
-        note: "24,872 freshly scraped real rows + 1,600 train-only DAIR-AI Fear tweets + 3,528 train-only paraphrases (2,747 tagged is_external_train_only = 1)."
+        note: "24,872 freshly scraped real rows + 1,600 train-only DAIR-AI rows (Fear 1,100 + Surprise 500) + 3,528 train-only Gemini Flash paraphrases."
       };
     } else {
       const s = sp[tab];
-      const goldMap = { train: "0 (AI conf ≥ 3)", val: "2,000 (66.7% Gold)", test: "3,000 (100% Gold)" };
+      const goldMap = { train: "0 (AI conf ≥ 3)", val: "2,000 (66.7% Consensus Gold)", test: "3,000 (100% Consensus Gold)" };
       const titleMap = {
         train: "Train Split (24,000 Rows · 80%)",
-        val: "Validation Split (3,000 Rows · 10%)",
-        test: "Test Benchmark (3,000 Rows · 10%)"
+        val: "Validation Split (3,000 Rows · 10% · Consensus Gold)",
+        test: "Test Benchmark (3,000 Rows · 10% · 100% Consensus Gold)"
       };
       info = {
         title: titleMap[tab],
@@ -300,7 +300,7 @@
         counts: s.class_counts,
         note: tab === "train"
           ? "Balanced 2,666–2,667 rows/class. Filter (is_augmented==0 & is_external_train_only==0) for strictly 18,872 native freshly scraped rows."
-          : "100% freshly scraped real comments · 0 augmented · 0 external · 0 MD5 hash overlap across splits."
+          : "100% freshly scraped real comments · 0 augmented · 0 external · 0 MD5 hash overlap · upgraded via 2-Round Blind-Swap Consensus Gold."
       };
     }
 
@@ -346,7 +346,7 @@
   });
   renderSplitTab("test");
 
-  // ---------- 2. Interactive Specimen Explorer ----------
+  // ---------- 2. Interactive Specimen Explorer (2-Round Blind-Swap Consensus Gold) ----------
   const sampleGrid = document.getElementById("sampleGrid");
   const sampleCountEl = document.getElementById("sampleCount");
   const fLang = document.getElementById("filterLang");
@@ -365,14 +365,14 @@
       if (emo !== "ALL" && s.label !== emo) return false;
       if (mod === "EMOJI" && !s.has_emoji) return false;
       if (mod === "TEXT" && s.has_emoji) return false;
-      if (gold === "FLIPPED" && !s.human_corrected) return false;
-      if (gold === "AGREED" && s.human_corrected) return false;
+      if (gold === "ADJUDICATED" && s.agreed) return false;
+      if (gold === "UNANIMOUS" && !s.agreed) return false;
       if (q && !(s.raw_text + " " + s.demoji_text + " " + s.platform + " " + s.row_id).toLowerCase().includes(q)) return false;
       return true;
     });
 
     if (sampleCountEl) {
-      sampleCountEl.textContent = `INDEXING ${filtered.length} OF ${DATA.samples.length} CURATED 100% GOLD SPECIMENS`;
+      sampleCountEl.textContent = `INDEXING ${filtered.length} OF ${DATA.samples.length} CURATED 100% CONSENSUS GOLD SPECIMENS`;
     }
 
     if (!filtered.length) {
@@ -381,15 +381,15 @@
     }
 
     sampleGrid.innerHTML = filtered.map((s) => {
-      const flipStamp = s.human_corrected
-        ? `<span class="stamp flip">Corrected: ${esc(s.ai_label)} → ${esc(s.label)}</span>`
-        : `<span class="stamp gold">Agreed: ${esc(s.label)}</span>`;
+      const consensusStamp = s.agreed
+        ? `<span class="stamp gold">Unanimous (A1 &amp; A2): ${esc(s.label)}</span>`
+        : `<span class="stamp flip">Adjudicated (${esc(s.ragib_label)} vs ${esc(s.galib_label)} → ${esc(s.label)})</span>`;
       return `<article class="specimen-card">
         <div class="specimen-meta">
           <div style="display:flex;flex-wrap:wrap;gap:5px">
             <span class="stamp lang">${esc(s.language_tag)}</span>
             <span class="stamp gold">${esc(s.label)} #${s.label_id}</span>
-            ${flipStamp}
+            ${consensusStamp}
           </div>
           <span style="color:var(--ink-muted)">${esc(s.row_id)} · ${esc(s.platform)}</span>
         </div>
