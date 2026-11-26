@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="ivory">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AffectFusion — Thesis Research &amp; Multimodal Emotion Recognition</title>
-  <meta name="description" content="AffectFusion: A Cross-Attention Transformer Framework for Explainable Multimodal Emotion Recognition from Text and Emoji Semantics across English, Bangla, and Banglish. Phase-I Thesis Progress Showcase with 2-Round Blind-Swap Human-vs-Human Consensus Gold (κ = 0.7717, α = 0.7717) and open dataset on Zenodo (#24543680) and Hugging Face (DOI: 10.57967/hf/11874)." />
+  <meta name="description" content="AffectFusion: A Cross-Attention Transformer Framework for Explainable Multimodal Emotion Recognition from Text and Emoji Semantics across English, Bangla, and Banglish. Phase-I Thesis Progress Showcase with 5,000-row blind dual-annotator consensus gold (κ = 0.7717, α = 0.7717) and open dataset on Zenodo (#24543680) and Hugging Face (DOI: 10.57967/hf/11874)." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Noto+Sans+Bengali:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -14,18 +14,19 @@
 
   <div id="readProgress" class="read-progress" aria-hidden="true"></div>
 
-  <!-- Sticky Editorial Navigation -->
+  <!-- Sticky Navigation -->
   <header class="topbar">
     <div class="container topbar-inner">
       <a class="brand" href="#top">
+        <span class="brand-mark" aria-hidden="true">A</span>
         <span class="brand-title">AffectFusion</span>
-        <span class="brand-tag">DIU CSE · Phase-I Thesis</span>
+        <span class="brand-tag">DIU CSE · Phase-I</span>
       </a>
       <nav aria-label="Primary navigation">
         <ul class="nav-links">
           <li><a href="#motivation">01 Motivation</a></li>
           <li><a href="#scraping">02 Harvesting</a></li>
-          <li><a href="#methodology">03 Architecture</a></li>
+          <li><a href="#methodology">03 Methodology</a></li>
           <li><a href="#gold-audit">04 Gold Audit</a></li>
           <li><a href="#explorer">05 Specimens</a></li>
           <li><a href="#results">06 Results</a></li>
@@ -34,7 +35,17 @@
         </ul>
       </nav>
       <div class="nav-right">
-        <button id="themeToggle" class="theme-btn" type="button" aria-label="Toggle paper or nocturne theme">Nocturne</button>
+        <div class="theme-switcher" role="group" aria-label="Select visual theme">
+          <button class="theme-opt active" data-theme-pick="ivory" type="button" title="Ivory Editorial Light">
+            <span class="swatch sw-ivory"></span><span class="th-lbl">Ivory</span>
+          </button>
+          <button class="theme-opt" data-theme-pick="blueprint" type="button" title="Blueprint Cyanotype Dark">
+            <span class="swatch sw-blueprint"></span><span class="th-lbl">Blueprint</span>
+          </button>
+          <button class="theme-opt" data-theme-pick="sage" type="button" title="Sage Botanical Light">
+            <span class="swatch sw-sage"></span><span class="th-lbl">Sage</span>
+          </button>
+        </div>
         <button id="menuToggle" class="menu-btn" type="button" aria-label="Open navigation menu" aria-expanded="false">☰ Menu</button>
       </div>
     </div>
@@ -47,10 +58,18 @@
       <span class="brand-title" style="font-size:1.5rem">AffectFusion</span>
       <button id="drawerClose" class="ed-btn sm" type="button">Close ✕</button>
     </div>
+    <div class="drawer-theme-row">
+      <span class="mono" style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.07em;color:var(--ink-muted)">Theme</span>
+      <div class="theme-switcher" role="group" aria-label="Mobile theme picker">
+        <button class="theme-opt active" data-theme-pick="ivory" type="button"><span class="swatch sw-ivory"></span><span>Ivory</span></button>
+        <button class="theme-opt" data-theme-pick="blueprint" type="button"><span class="swatch sw-blueprint"></span><span>Blueprint</span></button>
+        <button class="theme-opt" data-theme-pick="sage" type="button"><span class="swatch sw-sage"></span><span>Sage</span></button>
+      </div>
+    </div>
     <ul class="drawer-links">
       <li><a href="#motivation"><span>01 Motivation</span><span>→</span></a></li>
       <li><a href="#scraping"><span>02 Data Harvesting</span><span>→</span></a></li>
-      <li><a href="#methodology"><span>03 Architecture</span><span>→</span></a></li>
+      <li><a href="#methodology"><span>03 Methodology</span><span>→</span></a></li>
       <li><a href="#gold-audit"><span>04 Blind-Swap Gold (5K)</span><span>→</span></a></li>
       <li><a href="#explorer"><span>05 Live Specimens</span><span>→</span></a></li>
       <li><a href="#results"><span>06 Phase-I Results</span><span>→</span></a></li>
@@ -64,25 +83,25 @@
     </div>
   </aside>
 
-  <!-- Asymmetric Broadsheet Hero -->
+  <!-- Hero Section -->
   <section id="top" class="hero">
     <div class="container">
       <div class="hero-grid">
         <div>
-          <div class="kicker">Phase-I Undergraduate Thesis · Dept. of CSE, Daffodil International University</div>
+          <div class="kicker"><span class="kicker-dot"></span>Phase-I Undergraduate Thesis · Dept. of CSE, Daffodil International University</div>
           <h1>AffectFusion: Explainable Emotion Recognition from <em>Text &amp; Emoji</em> Semantics</h1>
           <p class="hero-abstract">
-            Social media language rarely lives in literal words alone. Across English, native Bengali script, and Romanized Banglish, a single Unicode glyph routinely intensifies, softens, or completely inverts the emotion of a sentence. This thesis showcase documents everything completed in Phase-I—multi-platform harvesting of 60,000 raw comments across YouTube, Reddit, Mastodon, and Lemmy, 2-Round Blind-Swap Human-vs-Human Consensus Gold verification across 5,000 paired rows (10,000 independent human judgments, κ = 0.7717, α = 0.7717), our openly published benchmark dataset, and 3-baseline evaluations—alongside what remains for the Next Phase before manuscript submission.
+            Social media language rarely lives in literal words alone. Across English, native Bengali script, and Romanized Banglish, a single Unicode glyph routinely intensifies, softens, or completely inverts the emotion of a sentence. This showcase documents everything completed in Phase-I—multi-platform harvesting of 60,000 raw comments across YouTube, Reddit, Mastodon, and Lemmy, blind dual-annotator consensus gold verification across 5,000 paired rows (10,000 independent human judgments, κ = 0.7717, α = 0.7717), our openly published benchmark dataset, and controlled baseline evaluations—alongside remaining Next Phase work scheduled through February 2027.
           </p>
 
-          <!-- Clear Honest Academic Status Distinction -->
+          <!-- Honest Academic Status Distinction -->
           <div class="status-banner">
             <div class="status-pill-box done">
               <span class="st-top"><span>✓ Benchmark Dataset Published</span><span>Open Access</span></span>
               <span class="st-desc">30,000-row corpus &amp; 5K gold audit live on <strong>Hugging Face</strong> &amp; <strong>Zenodo</strong> (CC BY 4.0).</span>
             </div>
             <div class="status-pill-box pending">
-              <span class="st-top"><span>○ Thesis Paper Not Submitted Yet</span><span>Next Phase</span></span>
+              <span class="st-top"><span>○ Thesis Paper In Progress</span><span>Target: Feb 2027</span></span>
               <span class="st-desc">Phase-I baselines finished; Cross-Attention model, XAI suite &amp; paper submission remain.</span>
             </div>
           </div>
@@ -91,7 +110,7 @@
             <a class="ed-btn primary" href="https://doi.org/10.57967/hf/11874" target="_blank" rel="noopener">Hugging Face Dataset ↗</a>
             <a class="ed-btn vermilion" href="https://zenodo.org/records/24543680?preview_file=affectfusion_dataset_v1.0.0.zip" target="_blank" rel="noopener">Zenodo Archive ↗</a>
             <a class="ed-btn forest" href="https://github.com/ragibcs/AffectFusion" target="_blank" rel="noopener">GitHub Code ↗</a>
-            <a class="ed-btn" href="#progress">See Progress &amp; Remaining Work ↓</a>
+            <a class="ed-btn" href="#progress">Progress &amp; Remaining Work ↓</a>
           </div>
         </div>
 
@@ -99,7 +118,7 @@
         <aside class="colophon-card">
           <div class="colophon-head">
             <span>Thesis Dossier</span>
-            <span>Phase-I Complete</span>
+            <span style="color:var(--forest)">Phase-I Complete</span>
           </div>
           <div class="colophon-row">
             <span class="k">Authors</span>
@@ -111,17 +130,17 @@
           </div>
           <div class="colophon-row">
             <span class="k">Dataset DOI</span>
-            <span class="v mono" style="font-size:0.76rem"><a href="https://doi.org/10.57967/hf/11874" target="_blank" rel="noopener">10.57967/hf/11874</a> (HF)<br /><a href="https://zenodo.org/records/24543680?preview_file=affectfusion_dataset_v1.0.0.zip" target="_blank" rel="noopener">10.5281/zenodo.24543680</a></span>
+            <span class="v mono" style="font-size:0.75rem"><a href="https://doi.org/10.57967/hf/11874" target="_blank" rel="noopener">10.57967/hf/11874</a> (HF)<br /><a href="https://zenodo.org/records/24543680?preview_file=affectfusion_dataset_v1.0.0.zip" target="_blank" rel="noopener">10.5281/zenodo.24543680</a></span>
           </div>
           <div class="colophon-row">
-            <span class="k">Paper Status</span>
-            <span class="v"><span class="stamp pending">Phase-I · Manuscript Pending</span></span>
+            <span class="k">Completion</span>
+            <span class="v"><span class="stamp pending">All Work Target: Feb 2027</span></span>
           </div>
 
           <div class="hero-specimen">
             <div class="colophon-head" style="border:0;padding:0;margin-bottom:8px">
               <span>Live Emoji-Inversion Specimen</span>
-              <span>Consensus test_3k</span>
+              <span>Gold test_3k</span>
             </div>
             <div class="spec-tabs" role="tablist">
               <button class="spec-tab active" data-hero-spec="eng" type="button">ENG</button>
@@ -138,7 +157,7 @@
       </div>
     </div>
 
-    <!-- Executive Thesis Progress Dashboard Band -->
+    <!-- Thesis Progress Dashboard Band -->
     <div class="progress-band">
       <div class="container progress-grid">
         <div class="ring-wrap">
@@ -150,30 +169,30 @@
           <div class="ring-meta">
             <div class="rm-k">Overall FYDP Progress</div>
             <div class="rm-v">8 of 14 Milestones</div>
-            <div class="rm-s">Phase-I: <strong>100% Done</strong> · Next Phase: <strong>6 Tasks Left</strong></div>
+            <div class="rm-s">Phase-I: <strong>100% Done</strong> · Next Phase: <strong>By Feb 2027</strong></div>
           </div>
         </div>
 
         <div class="stage-stepper">
           <div class="st-step done">
-            <div class="s-hdr"><span>Stage 1</span><span>✓ 100%</span></div>
+            <div class="s-hdr"><span>Stage 1</span><span>✓ Done</span></div>
             <div class="s-name">Data, Blind-Swap 5K &amp; Open Release</div>
             <div class="s-sub">κ = 0.7717 · Zenodo &amp; HF live</div>
           </div>
           <div class="st-step done">
-            <div class="s-hdr"><span>Stage 2</span><span>✓ 100%</span></div>
+            <div class="s-hdr"><span>Stage 2</span><span>✓ Done</span></div>
             <div class="s-name">3 Phase-I Baselines &amp; Stats</div>
             <div class="s-sub">63.10% Acc · p &lt; 0.0001</div>
           </div>
           <div class="st-step next">
-            <div class="s-hdr"><span>Stage 3</span><span>○ Remaining</span></div>
-            <div class="s-name">Cross-Attention &amp; XAI Suite</div>
-            <div class="s-sub">Core Next Phase model</div>
+            <div class="s-hdr"><span>Stage 3</span><span>Dec–Jan</span></div>
+            <div class="s-name">Cross-Attention &amp; Ablations</div>
+            <div class="s-sub">Dual encoders + GoEmotions</div>
           </div>
           <div class="st-step pending">
-            <div class="s-hdr"><span>Stage 4</span><span>○ Not Submitted</span></div>
-            <div class="s-name">Demo App &amp; Paper Publication</div>
-            <div class="s-sub">Final write-up &amp; journal</div>
+            <div class="s-hdr"><span>Stage 4</span><span>Feb 2027</span></div>
+            <div class="s-name">XAI Suite, Demo &amp; Thesis Paper</div>
+            <div class="s-sub">SHAP/LIME + final submission</div>
           </div>
         </div>
 
@@ -181,16 +200,16 @@
       </div>
     </div>
 
-    <!-- Hairline Broadsheet Ledger Strip -->
+    <!-- KPI Ledger Strip -->
     <div class="container">
       <div class="ledger-strip">
         <div class="ledger-cell">
           <div class="ledger-idx">I · Locked Corpus</div>
-          <div class="ledger-num">30,000</div>
-          <p class="ledger-sub">Curated from 60,000 raw posts (55,399 cleaned) into MD5-deduplicated 80/10/10 splits.</p>
+          <div class="ledger-num accent">30,000</div>
+          <p class="ledger-sub">Curated from 60,000 raw posts (55,399 cleaned) into hash-deduplicated 80/10/10 splits.</p>
         </div>
         <div class="ledger-cell">
-          <div class="ledger-idx">II · 2-Round Blind-Swap IAA</div>
+          <div class="ledger-idx">II · Blind-Swap Human IAA</div>
           <div class="ledger-num forest">κ = 0.7717</div>
           <p class="ledger-sub">5,000 paired human rows (10,000 judgments · α = 0.7717 · 79.80% unanimous · 1,010 adjudicated).</p>
         </div>
@@ -235,12 +254,12 @@
         </div>
 
         <blockquote class="pull-quote">
-          “When emojis are removed, XLM-RoBERTa's Sarcasm F1 collapses to 0.3153—statistically indistinguishable from a lightweight CNN-BiLSTM (p = 0.332). Re-introducing CLDR emoji semantics recovers +14.73 points on Sarcasm and +12.42 Macro-F1 across all 1,974 emoji-bearing test posts—yet flat concatenation still triggers 192 emoji-hijacking regressions, directly motivating Next Phase Bidirectional Cross-Attention.”
+          “When emojis are removed, XLM-RoBERTa's Sarcasm F1 collapses to 0.3153—statistically indistinguishable from a lightweight CNN-BiLSTM (p = 0.332). Re-introducing emoji semantics recovers +14.73 points on Sarcasm and +12.42 Macro-F1 across all 1,974 emoji-bearing test posts—yet static concatenation still triggers 192 emoji-hijacking regressions, directly motivating Next Phase Bidirectional Cross-Attention.”
           <cite>Phase-I Empirical Finding · 100% Consensus Gold test_3k (N = 3,000, p &lt; 0.0001)</cite>
         </blockquote>
 
         <div style="margin-top:24px">
-          <div class="colophon-head" style="border-bottom:1px solid var(--ink);margin-bottom:12px">
+          <div class="colophon-head" style="border-bottom:1px solid var(--rule-strong);margin-bottom:12px">
             <span>Canonical 9-Class Emotion Taxonomy (docs/label_map.json)</span>
             <span>ENG 36.9% · BN 35.3% · BNG 27.8%</span>
           </div>
@@ -266,13 +285,13 @@
       <aside class="marginalia">
         <span class="sec-num">02</span>
         <div class="sec-label">Data Harvesting</div>
-        <p class="sec-note">Multi-platform scraping of 60,000 raw comments across YouTube (~96%), Reddit, Mastodon, Lemmy &amp; RSS—processed in 5K chunks.</p>
+        <p class="sec-note">Quota-driven collection of 60,000 raw comments across YouTube (~96%), Reddit, Mastodon, Lemmy &amp; RSS—cleaned in 5K chunks.</p>
       </aside>
 
       <div>
         <div class="content-head">
           <h2>How We <em>Scraped, Sanitized &amp; Locked</em> the 30,000-Row Corpus</h2>
-          <p>We harvested <strong>60,000 raw comments</strong> under strict language and modality quotas (<code>ENG 24,000</code>, <code>BN 18,000</code>, <code>BNG 18,000</code>; <code>42,000</code> [70%] emoji + <code>18,000</code> [30%] non-emoji), streamed cleaning in 5,000-row chunks to remove 4,601 noisy entries (7.67%), and locked zero-leakage evaluation splits before any augmentation.</p>
+          <p>We harvested <strong>60,000 raw comments</strong> under strict language and modality quotas (<code>ENG 24,000</code>, <code>BN 18,000</code>, <code>BNG 18,000</code>; <code>42,000</code> [70%] emoji + <code>18,000</code> [30%] non-emoji), streamed cleaning in 5,000-row chunks to remove 4,601 noisy entries (7.67%), and locked zero-leakage evaluation splits prior to any augmentation.</p>
         </div>
 
         <div class="folio-box" style="margin-bottom:24px">
@@ -295,39 +314,39 @@
             <span><i class="sb-dot sb-lemmy"></i>Lemmy: 12 (0.2%)</span>
           </div>
           <p style="margin-top:14px;font-size:0.87rem">
-            <strong>Source Registry &amp; Quarantine Policy:</strong> Comments were collected across <strong>830 tracked YouTube video IDs</strong> (<code>scraped_sources_registry.json</code> spanning Bangladeshi news, comedy/roast, cricket, drama, horror, and global channels), <em>Arctic Shift</em> + <code>old.reddit.com</code> public JSON (<code>r/bangladesh</code> &amp; emotion subreddits), <code>mastodon.social</code> public feeds, Lemmy, and news RSS. To prevent rare-class starvation during training, <strong>1,600</strong> English rows from <em>dair-ai/emotion</em> (<strong>Fear 1,100 + Surprise 500</strong>) were quarantined strictly inside <code>train_24k</code> (<code>is_external_train_only = 1</code>; strictly <strong>0 rows</strong> in Validation or Test).
+            <strong>Source Registry &amp; Quarantine Policy:</strong> Comments were collected across <strong>830 tracked YouTube video IDs</strong> (spanning Bangladeshi news, comedy, cricket, drama, horror, and global channels), <em>Arctic Shift</em> + Reddit public JSON, Mastodon hashtag timelines, Lemmy, and news RSS. To mitigate rare-class scarcity during training only, <strong>1,600</strong> English rows from <em>dair-ai/emotion</em> (<strong>Fear 1,100 + Surprise 500</strong>) were quarantined strictly inside <code>train_24k</code> (<code>is_external_train_only = 1</code>; strictly <strong>0 rows</strong> in Validation or Test).
           </p>
         </div>
 
         <div class="funnel-ledger">
           <div class="fl-row">
-            <span class="fl-step">Stage I</span>
+            <span class="fl-step">Step 1</span>
             <span class="fl-num">60,000</span>
-            <span class="fl-desc"><strong>Raw Multi-Platform Harvest</strong> — Quota scrapers (ENG 24K, BN 18K, BNG 18K; 70% emoji / 30% non-emoji; ~96% YouTube + Reddit, Mastodon, Lemmy, RSS) with SQLite MD5 dedup.</span>
+            <span class="fl-desc"><strong>Quota-Driven Scraping</strong> — ENG 24K, BN 18K, BNG 18K (70% emoji / 30% non-emoji; ~96% YouTube + Reddit, Mastodon, Lemmy, RSS) with SQLite hash dedup.</span>
             <div class="fl-bar-wrap"><div class="fl-bar-fill" style="width:100%"></div></div>
           </div>
           <div class="fl-row">
-            <span class="fl-step">Stage II</span>
+            <span class="fl-step">Step 2</span>
             <span class="fl-num">55,399</span>
-            <span class="fl-desc"><strong>5K-Chunk Cleaning &amp; PII Masking</strong> — Dropped 4,601 rows (7.67%: non-target script 3,360, Hindi/Hinglish 860, length 352, dupes 24, spam 5); masked PII &amp; normalized emoji skin tones.</span>
+            <span class="fl-desc"><strong>5K-Chunk Preprocessing</strong> — Dropped 4,601 rows (7.67%: non-target script 3,360, Hindi/Hinglish 860, length 352, dupes 24, spam 5); anonymized PII &amp; normalized emoji tones.</span>
             <div class="fl-bar-wrap"><div class="fl-bar-fill" style="width:92.3%"></div></div>
           </div>
           <div class="fl-row">
-            <span class="fl-step">Stage III</span>
+            <span class="fl-step">Steps 3–4</span>
             <span class="fl-num">44,580</span>
-            <span class="fl-desc"><strong>Priority Queue &amp; Gemini Flash-Lite Labeling</strong> — Queued 44,486 rows (Joy/Neutral capped at 6,500), labeled 43,111 (batch 25, 100% pilot parse), dropped 131 (<code>conf &lt; 3</code>) → 42,980 + 1,600 train-only DAIR-AI.</span>
+            <span class="fl-desc"><strong>Priority Queue &amp; Gemini Flash-Lite</strong> — Queued 44,486 rows (Joy/Neutral capped 6,500), labeled 43,111 (100% pilot parse), dropped 131 (<code>conf &lt; 3</code>) → 42,980 + 1,600 train-only external.</span>
             <div class="fl-bar-wrap"><div class="fl-bar-fill" style="width:74.3%"></div></div>
           </div>
           <div class="fl-row">
-            <span class="fl-step">Stage IV</span>
-            <span class="fl-num">5K Blind-Swap</span>
-            <span class="fl-desc"><strong>Zero-Leakage Lock &amp; 2-Round Consensus Gold</strong> — Locked 100% real <code>val_3k</code> &amp; <code>test_3k</code> by MD5 hash; both researchers independently annotated all 5,000 rows (10,000 judgments, κ = 0.7717, α = 0.7717).</span>
+            <span class="fl-step">Step 6</span>
+            <span class="fl-num">5,000 Gold</span>
+            <span class="fl-desc"><strong>Blind Dual-Annotator Consensus</strong> — Locked 100% real <code>val_3k</code> &amp; <code>test_3k</code> by text hash; two annotators blindly labeled all 5,000 rows (10,000 judgments, κ = 0.7717, α = 0.7717).</span>
             <div class="fl-bar-wrap"><div class="fl-bar-fill" style="width:58%"></div></div>
           </div>
           <div class="fl-row">
-            <span class="fl-step">Stage V</span>
+            <span class="fl-step">Step 5</span>
             <span class="fl-num" style="color:var(--forest)">30,000</span>
-            <span class="fl-desc"><strong>Final Published Splits (80/10/10)</strong> — Balanced <code>train_24k</code> (+1,600 DAIR-AI + 3,528 train-only paraphrases across 143 calls), <code>val_3k</code> (66.7% Consensus Gold), and <code>test_3k</code> (100% Consensus Gold).</span>
+            <span class="fl-desc"><strong>Final Balanced Splits (80/10/10)</strong> — <code>train_24k</code> (20,472 real + 3,528 train-only paraphrases), <code>val_3k</code> (66.7% Gold), and <code>test_3k</code> (100% Gold).</span>
             <div class="fl-bar-wrap"><div class="fl-bar-fill" style="width:50.0%"></div></div>
           </div>
         </div>
@@ -344,75 +363,97 @@
     </div>
   </section>
 
-  <!-- 03 · Methodology & Dual-Stream Architecture -->
+  <!-- 03 · End-to-End 11-Step Methodology & Schema -->
   <section id="methodology" class="ed-section reveal">
     <div class="container ed-layout">
       <aside class="marginalia">
         <span class="sec-num">03</span>
-        <div class="sec-label">Architecture</div>
-        <p class="sec-note">11-step v4 methodology pipeline. Click or tap any plate to open the full-resolution zoomable Lightbox viewer.</p>
+        <div class="sec-label">Methodology</div>
+        <p class="sec-note">11-step AffectFusion methodology. Tap any plate to inspect full 300-DPI vector clarity in the Lightbox.</p>
       </aside>
 
       <div>
         <div class="content-head">
-          <h2>Dual-Stream <em>v4 Methodology</em> &amp; Schema</h2>
-          <p>Each post is decomposed into clean text, normalized Unicode emoji glyphs, CLDR natural-language demoji descriptions, and quantitative affective cues—connecting all completed Phase-I milestones (Steps 1–8) to our Next Phase Bidirectional Cross-Attention &amp; XAI architecture (Steps 9–11).</p>
+          <h2>End-to-End <em>11-Step Methodology</em> &amp; Dual-Stream Schema</h2>
+          <p>Each comment is decomposed into clean text, normalized Unicode emoji glyphs, demojized natural-language descriptions, and quantitative affective cues—linking our completed Data Pipeline (Steps 1–6) directly into the Dual-Encoder Cross-Attention &amp; XAI Pipeline (Steps 7–11).</p>
         </div>
 
-        <div class="grid-2" style="margin-bottom:22px">
+        <!-- Featured 11-Step Methodology Layout -->
+        <div class="meth-feature-grid" style="margin-bottom:24px">
           <figure class="plate" style="margin:0">
-            <div class="plate-header"><span class="plate-id">Plate I</span><span>Tap to zoom ↗</span></div>
-            <div class="figure-thumb tall" data-src="assets/images/03_phase1_and_next_phase_architecture.png" data-title="Plate I · AffectFusion v4 11-Step System Architecture (Phase-I → Next Phase)" data-desc="Complete 11-step v4 methodology connecting 60K→30K curation, 2-Round Blind-Swap Consensus Gold (κ=0.7717, α=0.7717), 3-baseline benchmarks (63.10% Acc / 0.6278 F1), and Next Phase Bidirectional Cross-Attention + SHAP/LIME XAI.">
-              <img src="assets/images/03_phase1_and_next_phase_architecture.png" alt="AffectFusion v4 11-Step System Architecture" loading="lazy" />
+            <div class="plate-header"><span class="plate-id">Plate I · Final 11-Step Flow</span><span>300 DPI</span></div>
+            <div class="figure-thumb hero-plate" data-src="assets/images/03_phase1_and_next_phase_architecture.png" data-title="Plate I · AffectFusion End-to-End 11-Step Methodology" data-desc="Complete 11-step methodology spanning Data Pipeline (Steps 1–6: 60K→30K corpus & 5K blind human gold κ=0.772) and Model & Evaluation Pipeline (Steps 7–11: XLM-RoBERTa-base + 300-d Emoji2Vec-style encoders, Cross-Attention fusion, 9-class head, SHAP/LIME/attention XAI & statistical evaluation).">
+              <img src="assets/images/03_phase1_and_next_phase_architecture.png" alt="AffectFusion 11-Step Methodology Diagram" loading="lazy" />
             </div>
             <figcaption class="plate-caption">
-              <h4>AffectFusion v4 11-Step Architecture</h4>
-              <p>Connects completed Phase-I Consensus Gold benchmarks to Next Phase Cross-Attention &amp; XAI.</p>
+              <h4>AffectFusion 11-Step Methodology</h4>
+              <p>Click to inspect every data volume, encoder stream, and evaluation branch at full resolution.</p>
             </figcaption>
           </figure>
 
-          <figure class="plate" style="margin:0">
-            <div class="plate-header"><span class="plate-id">Plate II</span><span>Tap to zoom ↗</span></div>
-            <div class="figure-thumb tall" data-src="assets/images/01_methodology_presentation_diagram.png" data-title="Plate II · End-to-End Research Methodology" data-desc="Conceptual pipeline tracing multilingual text-and-emoji inputs through parallel encoders, cross-modal fusion, 9-class prediction, and explainability.">
-              <img src="assets/images/01_methodology_presentation_diagram.png" alt="Research Methodology Diagram" loading="lazy" />
+          <div>
+            <div class="stage-card s1">
+              <span class="sc-badge">Data Pipeline · Steps 1–6 (Completed ✓)</span>
+              <h4>Zero-Leakage Multilingual Corpus &amp; Blind Gold Audit</h4>
+              <ul>
+                <li><strong>Steps 1–2:</strong> 60,000 raw ENG/BN/BNG rows (70% emoji) → 55,399 PII-anonymized clean rows (4,601 non-target/Hindi/noise removed); emoji skin tones normalized.</li>
+                <li><strong>Steps 3–4:</strong> 44,486 priority-queued → Gemini Flash-Lite (9 classes, 100% pilot parse; 42,980 conf ≥ 3) + 1,600 train-only <code>dair-ai/emotion</code> = 44,580 pool.</li>
+                <li><strong>Steps 5–6:</strong> Balanced 80/10/10 splits (24K train / 3K val / 3K test; +3,528 train-only paraphrases) + <strong>5,000 blind dual-annotator gold</strong> (κ = 0.7717, α = 0.7717).</li>
+              </ul>
             </div>
-            <figcaption class="plate-caption">
-              <h4>Conceptual Multimodal Flow</h4>
-              <p>Dual-modality harvesting, stream alignment, fusion modeling, and human-grounded evaluation.</p>
-            </figcaption>
-          </figure>
+
+            <div class="stage-card s2">
+              <span class="sc-badge">Model &amp; Evaluation · Steps 7–11 (Baselines Done → Cross-Attn)</span>
+              <h4>Dual Encoders, Cross-Attention &amp; Tri-Method XAI</h4>
+              <ul>
+                <li><strong>Steps 7A &amp; 7B:</strong> <code>XLM-RoBERTa-base</code> encodes <code>text_stream</code> alongside a mean-pooled <code>300-d Emoji2Vec-style</code> emoji encoder.</li>
+                <li><strong>Steps 8 &amp; 9:</strong> Bidirectional Cross-Attention learns mutual Text ↔ Emoji alignment before 9-class classification.</li>
+                <li><strong>Steps 10A, 10B &amp; 11:</strong> Unified SHAP, LIME, and attention maps paired with Accuracy, Macro-F1, ablations &amp; paired significance tests → <em>Interpretable AffectFusion</em>.</li>
+              </ul>
+            </div>
+
+            <div class="folio-box" style="margin-top:14px">
+              <h3>Unified Dual-Stream Parquet Schema</h3>
+              <p style="font-size:0.84rem">Zero-null Parquet/CSV schema across <code>train_24k</code>, <code>val_3k</code>, and <code>test_3k</code>:</p>
+              <p class="swipe-hint">← Swipe table →</p>
+              <div class="table-wrap" style="margin-top:8px">
+                <table>
+                  <thead><tr><th>Group</th><th>Columns</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>Streams</strong></td><td class="mono" style="font-size:0.74rem">raw_text, text_stream, emoji_stream, demoji_text, baseline_input</td></tr>
+                    <tr><td><strong>Labels</strong></td><td class="mono" style="font-size:0.74rem">label, label_id (0–8), language_tag, language_id (0–2)</td></tr>
+                    <tr><td><strong>Density</strong></td><td class="mono" style="font-size:0.74rem">has_emoji, emoji_count, unique_emoji_count, emoji_density, text_length, word_count</td></tr>
+                    <tr><td><strong>Cues</strong></td><td class="mono" style="font-size:0.74rem">exclamation_count, question_count, uppercase_ratio, has_sarcasm_emoji_cue</td></tr>
+                    <tr><td><strong>Audit</strong></td><td class="mono" style="font-size:0.74rem">ai_confidence, is_augmented, is_external_train_only, is_human_verified, is_double_adjudicated</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="grid-2">
           <figure class="plate" style="margin:0">
-            <div class="plate-header"><span class="plate-id">Plate III</span><span>Tap to zoom ↗</span></div>
-            <div class="figure-thumb" data-src="assets/images/02_methodology_workflow_vertical.png" data-title="Plate III · Stage-by-Stage Operational Workflow" data-desc="Operational research execution sequence from multi-platform ingestion and cleaning to baseline evaluation and Next Phase interpretability.">
-              <img src="assets/images/02_methodology_workflow_vertical.png" alt="Operational Workflow Diagram" loading="lazy" />
+            <div class="plate-header"><span class="plate-id">Plate II</span><span>Architecture View</span></div>
+            <div class="figure-thumb" data-src="assets/images/01_methodology_presentation_diagram.png" data-title="Plate II · Conceptual Multimodal Architecture" data-desc="High-level view tracing multilingual text-and-emoji inputs through parallel encoders, bidirectional cross-attention fusion, 9-class classification, and XAI.">
+              <img src="assets/images/01_methodology_presentation_diagram.png" alt="Conceptual Multimodal Architecture" loading="lazy" />
             </div>
             <figcaption class="plate-caption">
-              <h4>Operational Execution Workflow</h4>
-              <p>Sequential pipeline verifying zero-leakage handoffs across every stage.</p>
+              <h4>Conceptual Multimodal Architecture</h4>
+              <p>Parallel text &amp; emoji streams converging in bidirectional cross-attention and explainability.</p>
             </figcaption>
           </figure>
 
-          <div class="folio-box">
-            <h3>Unified Dual-Stream Parquet Schema</h3>
-            <p>25 core Arrow/Parquet columns across <code>train</code> (24K), <code>validation</code> (3K), and <code>test</code> (3K), plus <code>is_double_adjudicated</code> on Consensus Gold splits:</p>
-            <p class="swipe-hint">← Swipe table →</p>
-            <div class="table-wrap" style="margin-top:10px">
-              <table>
-                <thead><tr><th>Group</th><th>Columns</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>IDs</strong></td><td class="mono" style="font-size:0.75rem">row_id, platform</td></tr>
-                  <tr><td><strong>Streams</strong></td><td class="mono" style="font-size:0.75rem">raw_text, text_stream, emoji_stream, demoji_text, baseline_input</td></tr>
-                  <tr><td><strong>Labels</strong></td><td class="mono" style="font-size:0.75rem">label, label_id (0–8), language_tag, language_id (0–2)</td></tr>
-                  <tr><td><strong>Density</strong></td><td class="mono" style="font-size:0.75rem">has_emoji, emoji_count, unique_emoji_count, emoji_density, text_length, word_count</td></tr>
-                  <tr><td><strong>Cues</strong></td><td class="mono" style="font-size:0.75rem">exclamation_count, question_count, uppercase_ratio, has_sarcasm_emoji_cue</td></tr>
-                  <tr><td><strong>Audit</strong></td><td class="mono" style="font-size:0.75rem">ai_confidence, is_augmented, is_external_train_only, is_human_verified, is_double_adjudicated</td></tr>
-                </tbody>
-              </table>
+          <figure class="plate" style="margin:0">
+            <div class="plate-header"><span class="plate-id">Plate III</span><span>Workflow View</span></div>
+            <div class="figure-thumb" data-src="assets/images/02_methodology_workflow_vertical.png" data-title="Plate III · Stage-by-Stage Execution Workflow" data-desc="Sequential operational flow from multi-platform scraping and cleaning to baseline evaluation and next-phase interpretability.">
+              <img src="assets/images/02_methodology_workflow_vertical.png" alt="Stage-by-Stage Execution Workflow" loading="lazy" />
             </div>
-          </div>
+            <figcaption class="plate-caption">
+              <h4>Operational Execution Workflow</h4>
+              <p>End-to-end milestone handoffs verifying zero-leakage discipline across every stage.</p>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </div>
@@ -429,11 +470,11 @@
 
       <div>
         <div class="content-head">
-          <h2>2-Round Blind-Swap <em>Human-vs-Human</em> Consensus Gold (5,000 Rows)</h2>
-          <p>Evaluating models against unverified LLM pseudo-labels—or single-annotator reviews—risks circular bias. Both researchers independently labeled all <strong>5,000 real scraped evaluation rows</strong> across Round 1 and a Round 2 blind swap without seeing each other's annotations, achieving <strong>79.80% unanimous agreement</strong> (<code>3,990 / 5,000</code>), <strong>Cohen's κ = 0.7717</strong>, and <strong>Krippendorff's α = 0.7717</strong> (Substantial).</p>
+          <h2>Blind Dual-Annotator <em>Human-vs-Human</em> Consensus Gold (5,000 Rows)</h2>
+          <p>Evaluating models against unverified automated labels—or single-annotator passes—risks circular bias. Both researchers independently labeled all <strong>5,000 real scraped evaluation rows</strong> across Round 1 and a Round 2 blind swap without viewing each other's annotations, achieving <strong>79.80% unanimous agreement</strong> (<code>3,990 / 5,000</code>), <strong>Cohen's κ = 0.7717</strong>, and <strong>Krippendorff's α = 0.7717</strong> (Substantial).</p>
         </div>
 
-        <div class="ledger-strip" style="border:1px solid var(--rule-strong);margin-bottom:24px">
+        <div class="ledger-strip boxed" style="margin-bottom:24px">
           <div class="ledger-cell">
             <div class="ledger-idx">Human-vs-Human IAA</div>
             <div class="ledger-num forest">κ = 0.7717</div>
@@ -441,25 +482,25 @@
           </div>
           <div class="ledger-cell">
             <div class="ledger-idx">Unanimous &amp; Adjudicated</div>
-            <div class="ledger-num">79.80%</div>
+            <div class="ledger-num accent">79.80%</div>
             <p class="ledger-sub">3,990 unanimous · 1,010 resolved (526 A1 / 482 A2 / 2 3rd)</p>
           </div>
           <div class="ledger-cell">
             <div class="ledger-idx">Test 3K Consensus</div>
             <div class="ledger-num vermilion">100% Gold</div>
-            <p class="ledger-sub">3,000 paired · 78.03% · κ = 0.7515 · 472 updated</p>
+            <p class="ledger-sub">3,000 paired rows · 78.03% raw · κ = 0.7515</p>
           </div>
           <div class="ledger-cell">
             <div class="ledger-idx">Val 3K Consensus</div>
             <div class="ledger-num">66.7% Gold</div>
-            <p class="ledger-sub">2,000 paired · 82.45% · κ = 0.8019 · 264 updated</p>
+            <p class="ledger-sub">2,000 paired rows · 82.45% raw · κ = 0.8019</p>
           </div>
         </div>
 
         <div class="grid-2">
           <div class="folio-box">
             <h3>Top Human-vs-Human Disagreement Pairs (1,010 Adjudicated)</h3>
-            <p>Mapping genuine human ambiguity across all 5,000 paired rows exposes the exact semantic boundaries—Anger↔Disgust, Joy↔Neutral, and Sarcasm boundaries—resolved via joint adjudication:</p>
+            <p>Mapping genuine human ambiguity across all 5,000 paired rows highlights the exact semantic boundaries—Anger↔Disgust, Joy↔Neutral, and Sarcasm—resolved through structured adjudication:</p>
             <div class="bar-list" style="margin-top:14px">
               <div class="bar-row"><div class="bar-head"><span>Anger ↔ Disgust</span><span class="mono">159 pairs (82 / 77)</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div></div>
               <div class="bar-row"><div class="bar-head"><span>Joy ↔ Neutral</span><span class="mono">101 pairs (53 / 48)</span></div><div class="bar-track"><div class="bar-fill forest" style="width:63.5%"></div></div></div>
@@ -473,13 +514,13 @@
           </div>
 
           <figure class="plate" style="margin:0">
-            <div class="plate-header"><span class="plate-id">Plate IV</span><span>Tap to zoom ↗</span></div>
-            <div class="figure-thumb" data-src="assets/images/08_gold_5k_cohens_kappa_heatmap.png" data-title="Plate IV · 5,000-Row Blind-Swap Human-vs-Human Agreement Matrix (κ = 0.7717, α = 0.7717)" data-desc="Full 9×9 paired inter-annotator agreement matrix between Annotator 1 and Annotator 2 across 5,000 blind-swapped ENG, BN, and BNG comments.">
-              <img src="assets/images/08_gold_5k_cohens_kappa_heatmap.png" alt="Gold 5K Blind-Swap Human-vs-Human Agreement Matrix" loading="lazy" />
+            <div class="plate-header"><span class="plate-id">Plate IV</span><span>9×9 IAA Matrix</span></div>
+            <div class="figure-thumb" data-src="assets/images/08_gold_5k_cohens_kappa_heatmap.png" data-title="Plate IV · 5,000-Row Blind Human-vs-Human Agreement Matrix (κ = 0.7717, α = 0.7717)" data-desc="Full 9×9 paired inter-annotator agreement matrix between Annotator 1 and Annotator 2 across 5,000 blind-swapped ENG, BN, and BNG comments.">
+              <img src="assets/images/08_gold_5k_cohens_kappa_heatmap.png" alt="Gold 5K Blind Human-vs-Human Agreement Matrix" loading="lazy" />
             </div>
             <figcaption class="plate-caption">
-              <h4>Blind-Swap Human-vs-Human Matrix (N = 5,000)</h4>
-              <p>79.80% unanimous agreement (κ = 0.7717, α = 0.7717); see Fig. 10 below for the ENG / BN / BNG language breakdown.</p>
+              <h4>Blind Human-vs-Human Matrix (N = 5,000)</h4>
+              <p>79.80% unanimous agreement (κ = 0.7717, α = 0.7717); see Fig. 10 below for the ENG / BN / BNG breakdown.</p>
             </figcaption>
           </figure>
         </div>
@@ -561,13 +602,13 @@
       <aside class="marginalia">
         <span class="sec-num">06</span>
         <div class="sec-label">Results &amp; Plates</div>
-        <p class="sec-note">Seed 42 · Google Colab Tesla T4 (~5.24 GB VRAM) · 100% Consensus Gold test_3k · Paired t-test &amp; McNemar χ².</p>
+        <p class="sec-note">Seed 42 · Google Colab Tesla T4 (~5.24 GB VRAM) · 100% Gold test_3k · Paired t-test &amp; McNemar χ².</p>
       </aside>
 
       <div>
         <div class="content-head">
           <h2>Phase-I <em>Benchmarks</em> &amp; Statistical Proof</h2>
-          <p>Controlled comparison of three foundational architectures on the locked 100% Consensus Gold <code>test_3k</code> benchmark—establishing our reference baseline and surfacing 1,107 diagnostic errors (including 192 emoji-hijacking regressions such as <code>AFG_042100</code>) before introducing our Next Phase Cross-Attention architecture.</p>
+          <p>Controlled comparison of three foundational architectures on the locked 100% Consensus Gold <code>test_3k</code> benchmark—establishing our reference baseline and diagnosing 1,107 errors (including 192 emoji-hijacking regressions such as <code>AFG_042100</code>) prior to Next Phase Cross-Attention.</p>
         </div>
 
         <p class="swipe-hint">← Swipe table horizontally →</p>
@@ -611,12 +652,12 @@
         </div>
 
         <div class="folio-box" style="margin-bottom:24px">
-          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px">
-            <div class="ed-tabs" style="margin:0;border:0">
-              <button class="ed-tab active" data-bench-split="test_3k_gold" type="button">Test 3K Consensus</button>
-              <button class="ed-tab" data-bench-split="val_3k" type="button">Val 3K Consensus</button>
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px">
+            <div class="ed-tabs" style="margin:0;padding:0;border:0">
+              <button class="ed-tab active" data-bench-split="test_3k_gold" type="button">Test 3K Gold</button>
+              <button class="ed-tab" data-bench-split="val_3k" type="button">Val 3K Gold</button>
             </div>
-            <div class="ed-tabs" style="margin:0;border:0">
+            <div class="ed-tabs" style="margin:0;padding:0;border:0">
               <button class="ed-tab active" data-bench-view="overall" type="button">Overall &amp; Modality</button>
               <button class="ed-tab" data-bench-view="language" type="button">By Language</button>
               <button class="ed-tab" data-bench-view="per_class" type="button">All 9 Emotions</button>
@@ -651,9 +692,9 @@
           </div>
         </div>
 
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px">
-          <h3 class="serif" style="font-size:1.7rem;font-weight:400;margin:0">Experimental Figures &amp; EDA Plates</h3>
-          <div class="ed-tabs" style="margin:0;border:0">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px">
+          <h3 class="serif" style="font-size:1.75rem;font-weight:400;margin:0">Experimental Figures &amp; EDA Plates</h3>
+          <div class="ed-tabs" style="margin:0;padding:0;border:0">
             <button class="ed-tab active" data-gallery-tab="all" type="button">All 11 Plates</button>
             <button class="ed-tab" data-gallery-tab="results" type="button">Benchmarks (5)</button>
             <button class="ed-tab" data-gallery-tab="eda" type="button">Corpus &amp; IAA (6)</button>
@@ -663,7 +704,7 @@
         <div class="grid-3">
           <figure class="plate" data-gallery-cat="results" style="margin:0">
             <div class="plate-header"><span class="plate-id">Fig. 01</span><span>Benchmark</span></div>
-            <div class="figure-thumb" data-src="assets/images/09_baseline_3model_comparison.png" data-title="Fig. 01 · 3-Model Baseline Comparison (Consensus Val vs. Gold Test)" data-desc="Accuracy and Macro-F1 across CNN-BiLSTM (53.37% / 0.5304), XLM-R Text-Only (54.47% / 0.5315), and XLM-R Early Fusion (63.10% / 0.6278).">
+            <div class="figure-thumb" data-src="assets/images/09_baseline_3model_comparison.png" data-title="Fig. 01 · 3-Model Baseline Comparison (Val vs. Gold Test)" data-desc="Accuracy and Macro-F1 across CNN-BiLSTM (53.37% / 0.5304), XLM-R Text-Only (54.47% / 0.5315), and XLM-R Early Fusion (63.10% / 0.6278).">
               <img src="assets/images/09_baseline_3model_comparison.png" alt="3-Model Baseline Comparison" loading="lazy" />
             </div>
             <figcaption class="plate-caption"><h4>3-Model Comparison</h4><p>+9.63 Macro-F1 leap from multimodal fusion.</p></figcaption>
@@ -679,7 +720,7 @@
 
           <figure class="plate" data-gallery-cat="results" style="margin:0">
             <div class="plate-header"><span class="plate-id">Fig. 03</span><span>Per-Class</span></div>
-            <div class="figure-thumb" data-src="assets/images/12_per_class_f1_comparison.png" data-title="Fig. 03 · Per-Class 9-Emotion F1 Comparison (Consensus Gold test_3k)" data-desc="Highlights the +14.73 pt Sarcasm F1 surge (0.3153 → 0.4626) alongside strong Sadness &amp; Anticipation scores.">
+            <div class="figure-thumb" data-src="assets/images/12_per_class_f1_comparison.png" data-title="Fig. 03 · Per-Class 9-Emotion F1 Comparison (Gold test_3k)" data-desc="Highlights the +14.73 pt Sarcasm F1 surge (0.3153 → 0.4626) alongside strong Sadness &amp; Anticipation scores.">
               <img src="assets/images/12_per_class_f1_comparison.png" alt="Per-Class F1 Comparison" loading="lazy" />
             </div>
             <figcaption class="plate-caption"><h4>9-Emotion F1 Profile</h4><p>Sarcasm climbs from 0.3153 to 0.4626.</p></figcaption>
@@ -698,12 +739,12 @@
             <div class="figure-thumb" data-src="assets/images/10_training_validation_curves.png" data-title="Fig. 05 · Training &amp; Validation Convergence Curves" data-desc="3-epoch convergence curves trained on Colab Tesla T4 (5.24 GB peak VRAM).">
               <img src="assets/images/10_training_validation_curves.png" alt="Training and Validation Curves" loading="lazy" />
             </div>
-            <figcaption class="plate-caption"><h4>Convergence Curves</h4><p>Stable 3-epoch optimization (~11.3 min total).</p></figcaption>
+            <figcaption class="plate-caption"><h4>Convergence Curves</h4><p>Stable 3-epoch optimization (~12.6 min total).</p></figcaption>
           </figure>
 
           <figure class="plate" data-gallery-cat="eda" style="margin:0">
             <div class="plate-header"><span class="plate-id">Fig. 06</span><span>EDA</span></div>
-            <div class="figure-thumb" data-src="assets/images/04_class_distribution_before_vs_after.png" data-title="Fig. 06 · Class Distribution Before vs. After Train-Only Balancing" data-desc="Shows equilibrium inside train_24k (2,666–2,667/class) with untouched real Consensus Gold Val/Test distributions.">
+            <div class="figure-thumb" data-src="assets/images/04_class_distribution_before_vs_after.png" data-title="Fig. 06 · Class Distribution Before vs. After Train-Only Balancing" data-desc="Shows equilibrium inside train_24k (2,666–2,667/class) with untouched real Gold Val/Test distributions.">
               <img src="assets/images/04_class_distribution_before_vs_after.png" alt="Class Distribution Before vs After" loading="lazy" />
             </div>
             <figcaption class="plate-caption"><h4>Class Balancing Audit</h4><p>Train-only balancing with zero eval leakage.</p></figcaption>
@@ -719,7 +760,7 @@
 
           <figure class="plate" data-gallery-cat="eda" style="margin:0">
             <div class="plate-header"><span class="plate-id">Fig. 08</span><span>EDA</span></div>
-            <div class="figure-thumb" data-src="assets/images/06_emoji_vs_non_emoji_per_class.png" data-title="Fig. 08 · Emoji-Bearing vs. Text-Only Proportions" data-desc="60.85% overall corpus emoji density (Sarcasm 88.2%, Sadness 84.1%, Consensus Gold Test 65.80%).">
+            <div class="figure-thumb" data-src="assets/images/06_emoji_vs_non_emoji_per_class.png" data-title="Fig. 08 · Emoji-Bearing vs. Text-Only Proportions" data-desc="60.85% overall corpus emoji density (Sarcasm 88.2%, Sadness 84.1%, Gold Test 65.80%).">
               <img src="assets/images/06_emoji_vs_non_emoji_per_class.png" alt="Emoji vs Non-Emoji Share" loading="lazy" />
             </div>
             <figcaption class="plate-caption"><h4>Emoji Prevalence</h4><p>60.85% overall · 88.2% in Sarcasm.</p></figcaption>
@@ -743,8 +784,8 @@
 
           <figure class="plate" data-gallery-cat="eda" style="margin:0">
             <div class="plate-header"><span class="plate-id">Fig. 11</span><span>Overview</span></div>
-            <div class="figure-thumb" data-src="assets/images/00_google_site_hero_banner.png" data-title="Fig. 11 · AffectFusion Phase-I Executive Summary Plate" data-desc="Visual summary of 60K→30K corpus curation, 5K Blind-Swap Consensus Gold (κ=0.7717, α=0.7717), and Phase-I results (63.10% Acc, +12.42% Emoji F1).">
-              <img src="assets/images/00_google_site_hero_banner.png" alt="Executive Summary Plate" loading="lazy" />
+            <div class="figure-thumb" data-src="assets/images/00_google_site_hero_banner.png" data-title="Fig. 11 · AffectFusion Phase-I Summary Plate" data-desc="Visual summary of 60K→30K corpus curation, 5K Blind-Swap Consensus Gold (κ=0.7717, α=0.7717), and Phase-I results (63.10% Acc, +12.42% Emoji F1).">
+              <img src="assets/images/00_google_site_hero_banner.png" alt="Phase-I Summary Plate" loading="lazy" />
             </div>
             <figcaption class="plate-caption"><h4>Phase-I Summary Plate</h4><p>Visual synthesis of Phase-I accomplishments.</p></figcaption>
           </figure>
@@ -759,20 +800,20 @@
       <aside class="marginalia">
         <span class="sec-num">07</span>
         <div class="sec-label">Progress Tracker</div>
-        <p class="sec-note">Clear transparency on what is already completed in Phase-I and what still remains before final defense and manuscript publication.</p>
+        <p class="sec-note">Clear transparency on completed Phase-I work and remaining deliverables scheduled within February 2027.</p>
       </aside>
 
       <div>
         <div class="content-head">
           <h2>Thesis <em>Progress</em>: What's Done &amp; What Remains</h2>
-          <p>All eight Phase-I engineering milestones—including 2-Round Blind-Swap Consensus Gold verification and publicly releasing our 30,000-row benchmark dataset on Zenodo and Hugging Face—are <strong>100% complete</strong>. Six core Next Phase deliverables (proposed architecture, XAI, demo, and journal/conference paper submission) remain ahead.</p>
+          <p>All eight Phase-I engineering milestones—including blind dual-annotator consensus gold verification and publicly archiving our 30,000-row benchmark dataset on Zenodo and Hugging Face—are <strong>100% complete</strong>. Six core Next Phase deliverables are scheduled for completion within <strong>February 2027</strong>.</p>
         </div>
 
-        <!-- Visual Master Progress Meter -->
+        <!-- Master Progress Meter -->
         <div class="progress-overview-card">
           <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:10px">
             <strong style="font-size:0.98rem">Master FYDP Completion Meter · 8 Completed / 6 Remaining (57% Overall)</strong>
-            <span class="mono" style="font-size:0.75rem;color:var(--forest)">Phase-I: 100% Complete · Paper Publication: Not Yet Submitted</span>
+            <span class="mono" style="font-size:0.74rem;color:var(--forest)">Phase-I: 100% Complete · Final Completion: Feb 2027</span>
           </div>
           <div class="prog-bar-multi" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100">
             <div class="pbm-done" style="width:57.1%"></div>
@@ -780,8 +821,8 @@
           </div>
           <div class="sb-legend">
             <span><i class="sb-dot" style="background:var(--forest)"></i>Completed in Phase-I (8 milestones · 57%)</span>
-            <span><i class="sb-dot" style="background:var(--ochre)"></i>Up Next: Cross-Attention &amp; XAI (4 milestones · 29%)</span>
-            <span><i class="sb-dot" style="background:var(--rule-strong)"></i>Final Stage: Demo &amp; Paper Submission (2 milestones · 14%)</span>
+            <span><i class="sb-dot" style="background:var(--accent)"></i>Dec 2026 – Jan 2027: Cross-Attention &amp; Ablations (4 milestones · 29%)</span>
+            <span><i class="sb-dot" style="background:var(--ochre)"></i>Feb 2027: XAI, Demo &amp; Thesis Submission (2 milestones · 14%)</span>
           </div>
         </div>
 
@@ -794,11 +835,11 @@
             </div>
             <div class="ch-item">
               <span class="ch-roman">I.</span>
-              <div><h4>Multi-Platform Scraping (60,000 Raw Comments) <span class="stamp gold">Done</span></h4><p>Built quota-managed scrapers across 830 YouTube videos (~96% via <code>youtube_api</code> + <code>yt-dlp</code>), Reddit (Arctic Shift), Mastodon, Lemmy &amp; RSS (70% emoji / 30% non-emoji).</p></div>
+              <div><h4>Multi-Platform Scraping (60,000 Raw Comments) <span class="stamp gold">Done</span></h4><p>Built quota-managed scrapers across YouTube (~96% via <code>youtube_api</code> + <code>yt-dlp</code>), Reddit (Arctic Shift), Mastodon, Lemmy &amp; RSS (70% emoji / 30% non-emoji).</p></div>
             </div>
             <div class="ch-item">
               <span class="ch-roman">II.</span>
-              <div><h4>5K-Chunk Cleaning &amp; PII Masking (55,399 Kept) <span class="stamp gold">Done</span></h4><p>Filtered 4,601 noisy/non-target rows (7.67%), masked URLs, handles, emails &amp; phones, normalized emoji skin tones, and deduplicated via MD5 hashes.</p></div>
+              <div><h4>5K-Chunk Cleaning &amp; PII Masking (55,399 Kept) <span class="stamp gold">Done</span></h4><p>Filtered 4,601 noisy/non-target rows (7.67%), masked URLs, handles, emails &amp; phones, normalized emoji skin tones, and deduplicated via text hashes.</p></div>
             </div>
             <div class="ch-item">
               <span class="ch-roman">III.</span>
@@ -806,7 +847,7 @@
             </div>
             <div class="ch-item">
               <span class="ch-roman">IV.</span>
-              <div><h4>2-Round Blind-Swap Consensus Gold (5,000 Paired) <span class="stamp gold">Done</span></h4><p>Both authors independently annotated all 5,000 evaluation rows (10,000 judgments: <strong>79.80% unanimous, κ = 0.7717, α = 0.7717</strong>; 1,010 disagreements jointly adjudicated).</p></div>
+              <div><h4>Blind Dual-Annotator Consensus Gold (5,000 Paired) <span class="stamp gold">Done</span></h4><p>Both authors independently annotated all 5,000 evaluation rows (10,000 judgments: <strong>79.80% unanimous, κ = 0.7717, α = 0.7717</strong>; 1,010 disagreements adjudicated).</p></div>
             </div>
             <div class="ch-item">
               <span class="ch-roman">V.</span>
@@ -818,7 +859,7 @@
             </div>
             <div class="ch-item">
               <span class="ch-roman">VII.</span>
-              <div><h4>3-Baseline Benchmarks &amp; Statistical Proof <span class="stamp gold">Done</span></h4><p>Evaluated CNN-BiLSTM, XLM-R Text-Only, and XLM-R Early Fusion on Consensus Gold—proving +12.42 Macro-F1 emoji lift (t = 10.11, p &lt; 0.0001) and auditing 1,107 errors.</p></div>
+              <div><h4>3-Baseline Benchmarks &amp; Statistical Proof <span class="stamp gold">Done</span></h4><p>Evaluated CNN-BiLSTM, XLM-R Text-Only, and XLM-R Early Fusion on Gold Test—proving +12.42 Macro-F1 emoji lift (t = 10.11, p &lt; 0.0001) and auditing 1,107 errors.</p></div>
             </div>
             <div class="ch-item">
               <span class="ch-roman">VIII.</span>
@@ -826,35 +867,35 @@
             </div>
           </div>
 
-          <!-- Right: Remaining Work (Dark Contrasting Slab) -->
+          <!-- Right: Remaining Work Slab -->
           <aside class="dark-slab">
-            <span class="slab-kicker">Remaining Work · Next Phase (6 Deliverables Left)</span>
+            <span class="slab-kicker">Remaining Work · Target Completion: February 2027</span>
             <h3>What Still Remains Before Final Thesis Defense &amp; Publication</h3>
-            <p class="slab-lead">While our dataset is now publicly archived for transparency, the core thesis architecture, explainability study, and research paper submission are upcoming Next Phase tasks:</p>
+            <p class="slab-lead">While our benchmark dataset is already openly archived for transparency, all six remaining Next Phase deliverables are scheduled to wrap up within February 2027:</p>
 
             <div class="slab-item">
-              <div class="slab-item-head"><h4>01 · Proposed Dual-Stream Cross-Attention Model</h4><span class="slab-badge">Remaining</span></div>
-              <p>Replace flat early concatenation with dedicated text and emoji encoders linked via gated bidirectional multi-head cross-attention to suppress the 192 emoji-hijacking regressions and capture text–emoji contradiction.</p>
+              <div class="slab-item-head"><h4>01 · Dual-Stream Encoders (Steps 7A &amp; 7B)</h4><span class="slab-badge">Dec 2026</span></div>
+              <p>Implement dedicated XLM-RoBERTa-base text encoder alongside 300-d Emoji2Vec-style mean-pooled emoji embeddings.</p>
             </div>
             <div class="slab-item">
-              <div class="slab-item-head"><h4>02 · Emoji Embedding Branch &amp; Sarcasm Loss</h4><span class="slab-badge">Remaining</span></div>
-              <p>Integrate dedicated Emoji2Vec / learned glyph embeddings, Romanized Banglish normalization, and contrastive/focal incongruity loss to push Sarcasm F1 past 0.60 and lift BNG F1.</p>
+              <div class="slab-item-head"><h4>02 · Bidirectional Cross-Attention &amp; Gating (Step 8)</h4><span class="slab-badge">Dec 2026</span></div>
+              <p>Replace flat early concatenation with Text↔Emoji multi-head cross-attention and modality gating to eliminate the 192 emoji-hijacking regressions.</p>
             </div>
             <div class="slab-item">
-              <div class="slab-item-head"><h4>03 · Comprehensive Ablation &amp; Multi-Seed Study</h4><span class="slab-badge">Remaining</span></div>
-              <p>Benchmark Early vs. Late vs. Cross-Attention fusion across multiple random seeds and evaluate cross-domain transfer on GoEmotions alongside fine-grained Sarcasm–Anger–Disgust analysis.</p>
+              <div class="slab-item-head"><h4>03 · Controlled Ablation Study (RQ1)</h4><span class="slab-badge">Jan 2027</span></div>
+              <p>Benchmark Text-Only, Early Fusion, Unidirectional, and Bidirectional Cross-Attention with paired t-tests, McNemar χ², and bootstrap CIs.</p>
             </div>
             <div class="slab-item">
-              <div class="slab-item-head"><h4>04 · Intrinsic &amp; Post-Hoc XAI Evaluation</h4><span class="slab-badge">Remaining</span></div>
-              <p>Extract token-to-emoji cross-attention heatmaps and verify faithfulness with SHAP &amp; LIME perturbation scores showing exactly which emoji drove each prediction.</p>
+              <div class="slab-item-head"><h4>04 · GoEmotions Cross-Domain Study (RQ3)</h4><span class="slab-badge">Jan 2027</span></div>
+              <p>Evaluate transfer generalization vs. GoEmotions while targeting gains on Sarcasm (&gt;0.4626 F1), Fear recall, and Banglish (&gt;0.5510 Macro-F1).</p>
             </div>
             <div class="slab-item">
-              <div class="slab-item-head"><h4>05 · Interactive Real-Time Explainer Demo</h4><span class="slab-badge">Remaining</span></div>
-              <p>Deploy a public multilingual text+emoji emotion explainer web app on Hugging Face Spaces for live thesis defense evaluation.</p>
+              <div class="slab-item-head"><h4>05 · Unified SHAP, LIME &amp; Attention XAI (Step 10A)</h4><span class="slab-badge">Feb 2027</span></div>
+              <p>Extract token-to-emoji attention heatmaps, validate faithfulness with SHAP &amp; LIME, and quantify tri-method attribution agreement.</p>
             </div>
             <div class="slab-item">
-              <div class="slab-item-head"><h4>06 · Thesis Report &amp; Research Paper Submission</h4><span class="slab-badge pub">Not Submitted Yet</span></div>
-              <p>Finalize the full thesis book and submit the complete peer-reviewed research manuscript (conference/journal) once Next Phase results are validated.</p>
+              <div class="slab-item-head"><h4>06 · Interactive Demo &amp; Final Thesis Paper (Step 11)</h4><span class="slab-badge pub">Feb 2027</span></div>
+              <p>Deploy the live Interpretable AffectFusion explainer prototype, complete the final FYDP thesis book, and submit the research manuscript.</p>
             </div>
           </aside>
         </div>
@@ -862,13 +903,13 @@
     </div>
   </section>
 
-  <!-- 08 · Published Dataset Artifacts, Code & Dataset Citation -->
+  <!-- 08 · Published Dataset Artifacts, Code & Citation -->
   <section id="colophon" class="ed-section tinted reveal">
     <div class="container ed-layout">
       <aside class="marginalia">
         <span class="sec-num">08</span>
         <div class="sec-label">Open Dataset</div>
-        <p class="sec-note">The benchmark dataset is archived under CC BY 4.0. Companion paper citation will be added upon Next Phase submission.</p>
+        <p class="sec-note">The benchmark dataset is archived under CC BY 4.0. Companion paper citation will be added upon Feb 2027 submission.</p>
       </aside>
 
       <div>
@@ -878,12 +919,12 @@
         </div>
 
         <div class="paper-notice">
-          <strong>Note on Publication Status:</strong> The <strong>AffectFusion benchmark dataset</strong> is publicly published on Zenodo and Hugging Face with permanent DOIs. The <strong>companion thesis research paper</strong> is currently in progress (Next Phase) and has <em>not yet been submitted for publication</em>; the BibTeX entries below cite the openly released dataset and codebase.
+          <strong>Note on Publication Status:</strong> The <strong>AffectFusion benchmark dataset</strong> is publicly published on Zenodo and Hugging Face with permanent DOIs. The <strong>companion thesis research paper</strong> is scheduled for submission in <strong>February 2027</strong>; the BibTeX entries below cite the openly released dataset and codebase.
         </div>
 
         <div class="grid-3" style="margin-bottom:24px">
           <div class="folio-box">
-            <div class="colophon-head" style="margin-bottom:10px"><span>Hugging Face Hub</span><span>Dataset Live</span></div>
+            <div class="colophon-head" style="margin-bottom:10px"><span>Hugging Face Hub</span><span style="color:var(--forest)">Dataset Live</span></div>
             <h3>DOI: 10.57967/hf/11874</h3>
             <p>Auto-indexed <code>default</code> (30K Parquet) and <code>gold_audit</code> (5K CSV) configs with live Dataset Viewer.</p>
             <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
@@ -893,7 +934,7 @@
           </div>
 
           <div class="folio-box">
-            <div class="colophon-head" style="margin-bottom:10px"><span>Zenodo Repository</span><span>Archive Live</span></div>
+            <div class="colophon-head" style="margin-bottom:10px"><span>Zenodo Repository</span><span style="color:var(--forest)">Archive Live</span></div>
             <h3>Record #24543680</h3>
             <p>Permanent archival deposit with Parquet &amp; CSV splits, Datasheet, Frictionless JSON &amp; ZIP bundle.</p>
             <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
@@ -904,7 +945,7 @@
           <div class="folio-box">
             <div class="colophon-head" style="margin-bottom:10px"><span>Code &amp; Documentation</span><span>Phase-I Repo</span></div>
             <h3>GitHub &amp; Docs</h3>
-            <p>Scraping pipelines, Colab notebooks, Round-2 Blind-Swap consensus CSVs, and full local reference documents.</p>
+            <p>Scraping pipelines, Colab notebooks, blind-swap consensus CSVs, and full local reference documents.</p>
             <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
               <a class="ed-btn sm forest" href="https://github.com/ragibcs/AffectFusion" target="_blank" rel="noopener">GitHub ↗</a>
               <a class="ed-btn sm" href="docs/DATASHEET.md" target="_blank">Datasheet</a>
@@ -915,7 +956,7 @@
 
         <div class="grid-2">
           <div>
-            <div class="colophon-head" style="border-bottom:1px solid var(--ink);margin-bottom:10px">
+            <div class="colophon-head" style="border-bottom:1px solid var(--rule-strong);margin-bottom:10px">
               <span>Quick-Start Python Loader</span>
               <span>datasets</span>
             </div>
@@ -938,12 +979,12 @@ print(f"Native train: {len(native_train):,} | Gold audit: {len(gold):,}")</code>
           </div>
 
           <div>
-            <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ink);margin-bottom:10px;gap:8px">
-              <span class="mono" style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-muted)">Cite Dataset (BibTeX)</span>
-              <div class="ed-tabs" style="margin:0;border:0">
-                <button class="ed-tab active" data-bib-tab="hf" type="button" style="min-height:32px;padding:4px 9px;font-size:0.68rem">HF DOI</button>
-                <button class="ed-tab" data-bib-tab="zenodo" type="button" style="min-height:32px;padding:4px 9px;font-size:0.68rem">Zenodo</button>
-                <button class="ed-tab" data-bib-tab="github" type="button" style="min-height:32px;padding:4px 9px;font-size:0.68rem">GitHub</button>
+            <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--rule-strong);margin-bottom:10px;gap:8px;padding-bottom:6px">
+              <span class="mono" style="font-size:0.69rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-muted)">Cite Dataset (BibTeX)</span>
+              <div class="ed-tabs" style="margin:0;padding:0;border:0">
+                <button class="ed-tab active" data-bib-tab="hf" type="button" style="min-height:30px;padding:4px 10px;font-size:0.67rem">HF DOI</button>
+                <button class="ed-tab" data-bib-tab="zenodo" type="button" style="min-height:30px;padding:4px 10px;font-size:0.67rem">Zenodo</button>
+                <button class="ed-tab" data-bib-tab="github" type="button" style="min-height:30px;padding:4px 10px;font-size:0.67rem">GitHub</button>
               </div>
             </div>
             <div class="code-slab">

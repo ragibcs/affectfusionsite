@@ -10,7 +10,7 @@
     toastEl.textContent = msg;
     toastEl.classList.add("show");
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2300);
+    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2200);
   }
 
   // ---------- Reading Progress & Back-to-Top ----------
@@ -68,26 +68,26 @@
   backdrop?.addEventListener("click", closeDrawer);
   document.querySelectorAll(".drawer-links a").forEach((a) => a.addEventListener("click", closeDrawer));
 
-  // ---------- Theme Toggle ----------
-  const themeBtn = document.getElementById("themeToggle");
-  const savedTheme = localStorage.getItem("af_theme") || "light";
-  if (savedTheme === "dark") document.documentElement.setAttribute("data-theme", "dark");
-  function syncThemeLabel() {
-    if (!themeBtn) return;
-    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-    themeBtn.textContent = isDark ? "Paper" : "Nocturne";
-  }
-  syncThemeLabel();
-  themeBtn?.addEventListener("click", () => {
-    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-    if (isDark) {
-      document.documentElement.removeAttribute("data-theme");
-      localStorage.setItem("af_theme", "light");
-    } else {
-      document.documentElement.setAttribute("data-theme", "dark");
-      localStorage.setItem("af_theme", "dark");
+  // ---------- 3-Theme Switcher (Ivory · Blueprint · Sage) ----------
+  const VALID_THEMES = ["ivory", "blueprint", "sage"];
+  const themeButtons = document.querySelectorAll("[data-theme-pick]");
+  function applyTheme(name, announce = false) {
+    const theme = VALID_THEMES.includes(name) ? name : "ivory";
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("af_palette", theme);
+    themeButtons.forEach((btn) => {
+      const isActive = btn.getAttribute("data-theme-pick") === theme;
+      btn.classList.toggle("active", isActive);
+      btn.setAttribute("aria-pressed", String(isActive));
+    });
+    if (announce) {
+      const labels = { ivory: "Ivory Theme", blueprint: "Blueprint Theme", sage: "Sage Theme" };
+      showToast(labels[theme]);
     }
-    syncThemeLabel();
+  }
+  applyTheme(localStorage.getItem("af_palette") || "ivory", false);
+  themeButtons.forEach((btn) => {
+    btn.addEventListener("click", () => applyTheme(btn.getAttribute("data-theme-pick"), true));
   });
 
   // ---------- Scrollspy (Desktop + Mobile Drawer) ----------
@@ -136,7 +136,7 @@
       .replace(/"/g, "&quot;");
   }
 
-  // ---------- Hero Live Specimen Switcher (Verified against Consensus Gold + Model Predictions) ----------
+  // ---------- Hero Live Specimen Switcher ----------
   const HERO_SPECIMENS = {
     eng: {
       quote: "<USER>-q7w and they were great special effects 🙄",
@@ -169,7 +169,7 @@
     });
   });
 
-  // ---------- Interactive Dissection Lab (Verified against Consensus Gold test_3k predictions) ----------
+  // ---------- Interactive Dissection Lab ----------
   const DISSECT_CASES = [
     {
       lang: "ENG · Sarcasm (AFG_038543)",
@@ -300,7 +300,7 @@
         counts: s.class_counts,
         note: tab === "train"
           ? "Balanced 2,666–2,667 rows/class. Filter (is_augmented==0 & is_external_train_only==0) for strictly 18,872 native freshly scraped rows."
-          : "100% freshly scraped real comments · 0 augmented · 0 external · 0 MD5 hash overlap · upgraded via 2-Round Blind-Swap Consensus Gold."
+          : "100% freshly scraped real comments · 0 augmented · 0 external · 0 text-hash overlap · verified via blind dual-annotator consensus."
       };
     }
 
@@ -346,7 +346,7 @@
   });
   renderSplitTab("test");
 
-  // ---------- 2. Interactive Specimen Explorer (2-Round Blind-Swap Consensus Gold) ----------
+  // ---------- 2. Interactive Specimen Explorer ----------
   const sampleGrid = document.getElementById("sampleGrid");
   const sampleCountEl = document.getElementById("sampleCount");
   const fLang = document.getElementById("filterLang");
@@ -558,7 +558,7 @@
   title        = {{AffectFusion: Cross-Attention Transformer Framework and Phase-I Multimodal Emotion Benchmark}},
   year         = {2026},
   howpublished = {\\url{https://github.com/ragibcs/AffectFusion}},
-  note         = {Phase-I Thesis Codebase (Manuscript in Preparation)},
+  note         = {Phase-I Thesis Codebase (Manuscript Target: Feb 2027)},
   institution  = {Department of Computer Science and Engineering, Daffodil International University}
 }`
   };
