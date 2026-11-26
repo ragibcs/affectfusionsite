@@ -70,11 +70,14 @@
 
   // ---------- 3-Theme Switcher (Ivory · Blueprint · Sage) ----------
   const VALID_THEMES = ["ivory", "blueprint", "sage"];
+  const THEME_COLORS = { ivory: "#faf8f4", blueprint: "#0a1426", sage: "#f1f6f3" };
   const themeButtons = document.querySelectorAll("[data-theme-pick]");
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
   function applyTheme(name, announce = false) {
     const theme = VALID_THEMES.includes(name) ? name : "ivory";
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("af_palette", theme);
+    if (themeColorMeta) themeColorMeta.setAttribute("content", THEME_COLORS[theme]);
     themeButtons.forEach((btn) => {
       const isActive = btn.getAttribute("data-theme-pick") === theme;
       btn.classList.toggle("active", isActive);
@@ -89,6 +92,13 @@
   themeButtons.forEach((btn) => {
     btn.addEventListener("click", () => applyTheme(btn.getAttribute("data-theme-pick"), true));
   });
+
+  // Swipe-right to close Mobile Drawer on touch screens
+  let drawerTouchX = 0;
+  drawer?.addEventListener("touchstart", (e) => { drawerTouchX = e.touches[0].clientX; }, { passive: true });
+  drawer?.addEventListener("touchend", (e) => {
+    if (e.changedTouches[0].clientX - drawerTouchX > 65) closeDrawer();
+  }, { passive: true });
 
   // ---------- Scrollspy (Desktop + Mobile Drawer) ----------
   const navLinks = Array.from(document.querySelectorAll(".nav-links a[href^='#'], .drawer-links a[href^='#']"));
@@ -523,6 +533,13 @@
   document.getElementById("lbPrev")?.addEventListener("click", () => openLightbox(lbIndex - 1));
   document.getElementById("lbNext")?.addEventListener("click", () => openLightbox(lbIndex + 1));
   lightbox?.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
+  // Touch swipe left/right inside Lightbox for mobile gallery navigation
+  let lbTouchX = 0;
+  lightbox?.addEventListener("touchstart", (e) => { lbTouchX = e.touches[0].clientX; }, { passive: true });
+  lightbox?.addEventListener("touchend", (e) => {
+    const dx = e.changedTouches[0].clientX - lbTouchX;
+    if (Math.abs(dx) > 55) openLightbox(dx < 0 ? lbIndex + 1 : lbIndex - 1);
+  }, { passive: true });
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeLightbox();
