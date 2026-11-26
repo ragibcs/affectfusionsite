@@ -68,15 +68,15 @@
   backdrop?.addEventListener("click", closeDrawer);
   document.querySelectorAll(".drawer-links a").forEach((a) => a.addEventListener("click", closeDrawer));
 
-  // ---------- 3-Theme Switcher (Ivory · Blueprint · Sage) ----------
-  const VALID_THEMES = ["ivory", "blueprint", "sage"];
-  const THEME_COLORS = { ivory: "#faf8f4", blueprint: "#0a1426", sage: "#f1f6f3" };
+  // ---------- 3-Theme Switcher (Paper · Blueprint · Sage) ----------
+  const VALID_THEMES = ["paper", "blueprint", "sage"];
+  const THEME_COLORS = { paper: "#f6f3ec", blueprint: "#0b1526", sage: "#eef3ef" };
   const themeButtons = document.querySelectorAll("[data-theme-pick]");
   const themeColorMeta = document.querySelector('meta[name="theme-color"]');
   function applyTheme(name, announce = false) {
-    const theme = VALID_THEMES.includes(name) ? name : "ivory";
+    const theme = VALID_THEMES.includes(name) ? name : "paper";
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("af_palette", theme);
+    localStorage.setItem("af_editorial_theme", theme);
     if (themeColorMeta) themeColorMeta.setAttribute("content", THEME_COLORS[theme]);
     themeButtons.forEach((btn) => {
       const isActive = btn.getAttribute("data-theme-pick") === theme;
@@ -84,11 +84,11 @@
       btn.setAttribute("aria-pressed", String(isActive));
     });
     if (announce) {
-      const labels = { ivory: "Ivory Theme", blueprint: "Blueprint Theme", sage: "Sage Theme" };
+      const labels = { paper: "Paper Editorial", blueprint: "Blueprint Theme", sage: "Sage Editorial" };
       showToast(labels[theme]);
     }
   }
-  applyTheme(localStorage.getItem("af_palette") || "ivory", false);
+  applyTheme(localStorage.getItem("af_editorial_theme") || "paper", false);
   themeButtons.forEach((btn) => {
     btn.addEventListener("click", () => applyTheme(btn.getAttribute("data-theme-pick"), true));
   });
